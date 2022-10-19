@@ -9,9 +9,20 @@ from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 api = Blueprint('api', __name__)
 
 
+@api.route('/token', methods=['POST'])
+def create_token():
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    if email != "test" or password != "test":
+        print(email,password)
+        return jsonify({"msg":"Wrong email or password"}), 401
+
+    acces_token = create_access_token(identity=email)
+    return jsonify(acces_token=acces_token)
+
+
 
 @api.route('/hello', methods=['GET'])
-@jwt_required
 def get_hello():
 
     dictionary = {
