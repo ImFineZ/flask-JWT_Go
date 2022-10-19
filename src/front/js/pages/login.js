@@ -1,42 +1,33 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const token = sessionStorage.getItem("token");
+  console.log("Your token: ", store.token);
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    const opts = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify({
-        "email": email,
-        "password": password
-      })
-    };
-    fetch("https://3001-gonza5150-flaskjwt-sntdmlw1imh.ws-us71.gitpod.io/token", opts)
-      .then(resp => {
-        if (resp.status === 200) return resp.json();
-        else alert("Sorry, it was an error!!!")
-      })
-      .then()
-      .catch(error => {
-        console.error("Sorry, it was an error!!!", error);
-      });
+    actions.login(email, password);
   };
+
+  if (store.token && store.token != "" && store.token != undefined) navigate("/")
 
   return (
     <div className="text-center mt-5">
       <h1>Login</h1>
-      <div>
-        <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button onClick={handleClick}>Login</button>
-      </div>
+      {(store.token && store.token != "" && storetoken != undefined) ? (
+        "you are logged whith this token" + store.token) : (
+        <div>
+          <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <button onClick={handleClick}>Login</button>
+        </div>
+      )}
     </div>
   );
 };
