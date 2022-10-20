@@ -15,12 +15,12 @@ export const Login = () => {
     actions.login(email, password);
   };
 
-  if (store.token && store.token != "" && store.token != undefined) navigate("/")
+  if (store.token && store.token != "" && store.token != undefined) navigate("/hello")
 
   return (
     <div className="text-center mt-5">
       <h1>Login</h1>
-      {(store.token && store.token != "" && storetoken != undefined) ? (
+      {(store.token && store.token != "" && store.token != undefined) ? (
         "you are logged whith this token" + store.token) : (
         <div>
           <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />

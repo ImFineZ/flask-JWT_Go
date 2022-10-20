@@ -22,12 +22,14 @@ def create_token():
     return jsonify(acces_token=acces_token)
 
 
-
 @api.route('/hello', methods=['GET'])
-@jwt_required
+@jwt_required()
 def get_hello():
     email = get_jwt_identity()
     dictionary = {
         "msg": "Hello World" + email
     }
     return jsonify(dictionary)
+
+
+
